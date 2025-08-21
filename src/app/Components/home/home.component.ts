@@ -1,17 +1,19 @@
 import { Component, AfterViewInit, HostListener, ElementRef, Inject } from '@angular/core';
 import { PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgFor } from '@angular/common';
+import { ProductdataService } from '../../services/productdata.service';
+import { Product } from '../../interfaces/product';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [NgFor],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements AfterViewInit {
   isBrowser: boolean;
-  constructor(private el: ElementRef, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(private el: ElementRef, @Inject(PLATFORM_ID) private platformId: Object,private _ProductdataService:ProductdataService) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -40,5 +42,16 @@ export class HomeComponent implements AfterViewInit {
         el.classList.remove('visible');
       }
     });
+  }
+  products:Product[]=[];
+  ngOnInit() {
+    this._ProductdataService.getAllProducts().subscribe({
+      next:(res)=>
+      {
+        this.products = res.data;
+      },
+    });
+
+
   }
 }

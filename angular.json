@@ -34,7 +34,7 @@
             ],
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "./node_modules/@fortawesome/fontawesome-free/js/all.min.js",
+              "./node_modules/@fortawesome/fontawesome-free/js/all.min.js"
             ],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -68,6 +68,12 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "ssl":false,
+            "sslKey": "src/ssl/server.key",
+            "sslCert": "src/ssl/server.crt"
+
+          },
           "configurations": {
             "production": {
               "buildTarget": "Alamin:build:production"
@@ -79,7 +85,10 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+               "options": {
+            "browserTarget": "Alamin:build"
+          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",

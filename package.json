@@ -9,6 +9,8 @@
     "test": "ng test",
     "serve:ssr:Alamin": "node dist/alamin/server/server.mjs"
   },
+  "start": "set NODE_TLS_REJECT_UNAUTHORIZED=0 && ng serve",
+
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.2.0",
