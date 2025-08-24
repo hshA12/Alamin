@@ -2,43 +2,148 @@
   <div class="login-card">
     <!-- Left: Login Form -->
     <div class="login-form-area">
-      <h2 class="login-title">Login</h2>
-      <form class="login-form">
+      <h2 class="login-title">Register</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="handleForm()" class="login-form">
         <div class="row">
           <div class="col-6">
             <div class="input-box">
-              <input type="text" placeholder="First Name" required />
+              <input
+                type="text"
+                formControlName="firstName"
+                placeholder="First Name"
+                required
+              />
               <i class="bx bxs-user"></i>
             </div>
           </div>
           <div class="col-6">
             <div class="input-box">
-              <input type="text" class="form-control" placeholder="Last Name" required />
+              <input
+                type="text"
+                formControlName="lastName"
+                class="form-control"
+                placeholder="Last Name"
+                required
+              />
               <i class="bx bxs-user"></i>
             </div>
           </div>
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              (registerForm.get('firstName')?.touched &&
+                registerForm.get('firstName')?.errors) ||
+              (registerForm.get('lastName')?.touched &&
+                registerForm.get('lastName')?.errors)
+            "
+          >
+            <p *ngIf="registerForm.get('firstName')?.getError('required')">
+              firstName Is required
+            </p>
+            <p *ngIf="registerForm.get('firstName')?.getError('minlength')">
+              firstName MinLength 3
+            </p>
+            <p *ngIf="registerForm.get('firstName')?.getError('maxlength')">
+              Name MinLength 20
+            </p>
+          </div>
         </div>
         <div class="input-box">
-          <input type="email" placeholder="Email" required />
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Email"
+            required
+          />
           <i class="bx bxs-user"></i>
-        </div>
-         <div class="input-box">
-          <input type="phone" placeholder="phone" required />
-          <i class="bx bxs-user"></i>
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              registerForm.get('email')?.touched &&
+              registerForm.get('email')?.errors
+            "
+          >
+            <p *ngIf="registerForm.get('email')?.getError('required')">
+              Email Is required
+            </p>
+            <p *ngIf="registerForm.get('email')?.getError('email')">
+              Email in valid
+            </p>
+          </div>
         </div>
         <div class="input-box">
-          <input type="password" placeholder="Password" required />
+          <input
+            type="phone"
+            formControlName="phoneNumber"
+            class="form-control"
+            placeholder="phone"
+            required
+          />
+          <i class="bx bxs-user"></i>
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              registerForm.get('phoneNumber')?.touched &&
+              registerForm.get('phoneNumber')?.errors
+            "
+          >
+            <p *ngIf="registerForm.get('phoneNumber')?.getError('required')">
+              phone Is required
+            </p>
+            <p *ngIf="registerForm.get('phoneNumber')?.getError('pattern')">
+              accept only egypt phone numbers
+            </p>
+          </div>
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="Password"
+            required
+          />
+          <i class="bx bxs-lock-alt"></i>
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              registerForm.get('password')?.touched &&
+              registerForm.get('password')?.errors
+            "
+          >
+            <p *ngIf="registerForm.get('password')?.getError('required')">
+              password Is required
+            </p>
+            <p *ngIf="registerForm.get('password')?.getError('pattern')">
+              must be at least 6 chars and contain at least one digit, one
+              lowercase letter, and one uppercase letter.
+            </p>
+          </div>
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="confirmPassword"
+            required
+          />
           <i class="bx bxs-lock-alt"></i>
         </div>
-         <div class="input-box">
-          <input type="password" placeholder="confirmPassword" required />
-          <i class="bx bxs-lock-alt"></i>
-        </div>
-        <button type="submit" class="btn main-btn">Login</button>
-        <div class="forgot-link">
-          <a href="#">Forgot password?</a>
-        </div>
+        <button
+          type="submit"
+          [disabled]="registerForm.invalid"
+          class="btn main-btn"
+        >
+          Register
+          <span *ngIf="isLoading"
+            ><i class="fa-solid fa-spinner fa-spin"></i
+          ></span>
+        </button>
+                  <p *ngIf="errMsg" class="alert alert-danger">{{ errMsg }}</p>
+
       </form>
+
     </div>
   </div>
 </section>

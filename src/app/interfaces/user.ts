@@ -4,6 +4,6 @@ export interface User {
   phoneNumber: string;
   fname: string;
   lName: string;
-  userName: string;
-  displayName: string;
+  UserName: string;
+  DisplayName: string;
 }
