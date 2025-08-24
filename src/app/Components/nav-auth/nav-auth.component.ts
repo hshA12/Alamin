@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nav-auth',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './nav-auth.component.html',
   styleUrl: './nav-auth.component.css'
 })

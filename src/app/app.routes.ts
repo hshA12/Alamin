@@ -4,11 +4,11 @@ import { HomeComponent } from './Components/home/home.component';
 import { BlankLayoutComponent } from './Components/blank-layout/blank-layout.component';
 import { AboutComponent } from './Components/about/about.component';
 import { AuthLayoutComponent } from './Components/auth-layout/auth-layout.component';
-import { LoginComponent } from './Components/user/login/login.component';
-import { RegisterComponent } from './Components/user/register/register.component';
+
+import { RegisterComponent } from './Components/register/register.component';
 
 export const routes: Routes = [
-  {path:'',component:BlankLayoutComponent, children:[
+  {path:'blank',component:BlankLayoutComponent, children:[
     {path:'', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent, data: { title: 'Home' } },
     {path: 'products', loadComponent: () => import('./Components/products/products.component').then(m => m.ProductsComponent), data: { title: 'Products' } },
@@ -16,8 +16,9 @@ export const routes: Routes = [
 
   ]},
   {path:'',component:AuthLayoutComponent, children:[
-    {path:'login',component:LoginComponent, data: { title: 'Login' } },
-    {path:'register',component:RegisterComponent, data: { title: 'Register' } },
+   { path:'', redirectTo: 'register', pathMatch: 'full' },
+   {path:'login',loadComponent: () => import('./Components/login/login.component').then(m => m.LoginComponent), data: { title: 'Login' } },
+ {path:'register',loadComponent: () => import('./Components/register/register.component').then(m => m.RegisterComponent), data: { title: 'Register' } },
   ]}
 
 ];

@@ -1,0 +1,11 @@
+.nav-link{
+  cursor: pointer;
+}
+:root{
+  --accent-color: #4299e1;
+
+}
+.active-link {
+  font-weight: 600;
+  color: var(--accent-color) !important;
+}
