@@ -3,20 +3,65 @@
     <!-- Left: Login Form -->
     <div class="login-form-area">
       <h2 class="login-title">Login</h2>
-      <form class="login-form">
+      <form
+        class="login-form"
+        [formGroup]="loginForm"
+        (ngSubmit)="handelForm()"
+      >
+        <div
+          class="alert alert-danger"
+          *ngIf="
+            (loginForm.get('email')?.touched &&
+              loginForm.get('email')?.errors) ||
+            (loginForm.get('password')?.touched &&
+              loginForm.get('password')?.errors)
+          "
+        >
+          <p *ngIf="loginForm.get('email')?.getError('required')">
+            Email Is required
+          </p>
+          <p *ngIf="loginForm.get('email')?.getError('email')">
+            Email Not Valid
+          </p>
+          <p *ngIf="loginForm.get('password')?.getError('required')">
+            Password Is required
+          </p>
+          <p *ngIf="loginForm.get('password')?.getError('minlength')">
+            Password MinLength 6
+          </p>
+          <p *ngIf="loginForm.get('password')?.getError('maxlength')">
+            Password MaxLength 20
+          </p>
+        </div>
         <div class="input-box">
-          <input type="email" placeholder="Email" required />
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Email"
+            required
+          />
           <i class="bx bxs-user"></i>
         </div>
         <div class="input-box">
-          <input type="password" placeholder="Password" required />
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Password"
+            required
+          />
           <i class="bx bxs-lock-alt"></i>
         </div>
-        <button type="submit" class="btn main-btn">Login</button>
+        <button
+          [disabled]="loginForm.invalid"
+          type="submit"
+          class="btn main-btn"
+        >
+          Login
+        </button>
         <div class="forgot-link">
           <a href="#">Forgot password?</a>
         </div>
-
+        <p *ngIf="errMsg" class="alert alert-danger">{{ errMsg }}</p>
       </form>
     </div>
   </div>

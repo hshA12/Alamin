@@ -65,25 +65,37 @@ export class RegisterComponent {
     }
   }
 
-  handleForm(): void {
-        const userData = this.registerForm.value;
+ handleForm(): void {
+  if (this.registerForm.valid) {
+    const formValue = this.registerForm.value;
+        const finalUserName = formValue.userName?.trim() || `${formValue.firstName}${formValue.lastName}`;
+    const finalDisplayName = formValue.displayName?.trim() || `${formValue.firstName} ${formValue.lastName}`;
 
-     this.isLoading = true;
-    if (this.registerForm.valid) {
+  const userData = {
+      email: formValue.email,
+      password: formValue.password,
+      phoneNumber: formValue.phoneNumber,
+      fname: formValue.firstName,
+      lName: formValue.lastName,
+      userName: finalUserName,
+      displayName: finalDisplayName
+    };
 
 
     this._AuthServiceService.register(userData).subscribe({
       next: (res) => {
-        if (res) {
-          console.log(res);
-          this._Router.navigate(['/login']);
-          this.isLoading = false;
-        }
+        console.log("fullres"+res);
+        this._Router.navigate(['/login']);
+        this.isLoading = false;
       },
       error: (err) => {
-        this.errMsg = err.error.message;
+        console.error("fulllog"+err.error?.errors);
+        this.errMsg = err.error.errorMessage;
+        console.log(err.errorMessage);
+        this.isLoading = false;
       }
     });
-     }
   }
+}
+
 }

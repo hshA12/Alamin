@@ -17,9 +17,13 @@ export class AuthServiceService {
     let decodeToken:any=jwtDecode(encodeToken+'');
     this.userData=decodeToken;
   }
-  register(userData:User):Observable<any>
+  register(userData:Object):Observable<any>
   {
     return this._HttpClient.post('http://localhost:5010/api/Authentication/Register',userData);
+  }
+  Login(UserData:object):Observable<any>
+  {
+    return this._HttpClient.post('http://localhost:5010/api/Authentication/Login',UserData);
   }
 
 }
